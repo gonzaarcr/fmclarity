@@ -1,0 +1,39 @@
+.root {
+  box-shadow: 0 0;
+  position: relative;
+}
+
+.table {
+  width: 100%;
+  text-align: left;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.cell {
+  padding: 1rem 1.5rem;
+}
+
+.edit_cell {
+  text-align: right;
+}
+
+.edit_text {
+  color: #3a7ff1;
+}
+
+.header {
+  text-transform: uppercase;
+}
+
+@media (prefers-color-schema: light) {
+  .header {
+    background-color: #f7f7f7;
+  }
+}
+
+@media (prefers-color-schema: dark) {
+  .header {
+    background-color: #374151;
+  }
+}

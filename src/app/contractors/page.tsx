@@ -1,25 +1,11 @@
 "use client";
+import { useEffect, useState } from "react";
 import Table, { ColumnType } from "../components/table";
+import { API_URL } from "../types/constrants";
 import { Contractor } from "../types/contractor";
 import styles from "./page.module.css";
 import Link from "next/link";
-
-const mock: Contractor[] = [
-  {
-    email: "a@server.com",
-    name: "AAAAA BBBBB",
-    services: ["Service A", "Service B"],
-    telephone: "+6111111111",
-    ubn: "UBN1",
-  },
-  {
-    email: "b@server.com",
-    name: "CCCCC BBBBB",
-    services: ["Service C", "Service D"],
-    telephone: "+5111111111",
-    ubn: "UBN2",
-  },
-];
+import { useContractorsStore } from "../store/contractors-store";
 
 const columns: ColumnType<Contractor>[] = [
   {
@@ -45,10 +31,20 @@ const columns: ColumnType<Contractor>[] = [
 ];
 
 export default function Contractors() {
+  const { contractors, isLoading } = useContractorsStore();
+
+  if (isLoading) return <p>Loading...</p>;
+  if (!contractors) return <p>No data</p>;
+
   return (
     <div className={styles.page}>
+      <div className={styles.add_button_container}>
+        <Link className={styles.add_button} href={"/contractors/add"}>
+          Add
+        </Link>
+      </div>
       <Table
-        elements={mock}
+        elements={contractors}
         getKey={(c: Contractor) => c.ubn}
         columns={columns}
         action={(e) => (

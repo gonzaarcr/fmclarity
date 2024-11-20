@@ -11,16 +11,27 @@ const emptyContractor: Contractor = {
   ubn: "",
 };
 
-export default function ContractorForm({ defaultContractor }: { defaultContractor?: Contractor }) {
+export default function ContractorForm({
+  title,
+  defaultContractor,
+  onSubmit,
+  servicesList,
+}: {
+  title: string;
+  defaultContractor?: Contractor;
+  onSubmit: (fields: Omit<Contractor, "ubn">) => Promise<void>;
+  servicesList: string[];
+}) {
   const [contractor, setContractor] = useState(defaultContractor ?? emptyContractor);
 
-  const updateContractor = (e: FormEvent) => {
+  const submit = async (e: FormEvent) => {
     e.preventDefault();
+    await onSubmit(contractor);
   };
 
   return (
-    <form className="w-full" onSubmit={updateContractor}>
-      <span className="font-bold py-2 block text-2xl">Edit contractor</span>
+    <form className="w-full" onSubmit={submit}>
+      <span className="font-bold py-2 block text-2xl">{title}</span>
       <div className="w-full py-2">
         <label className="text-sm font-bold py-2 block">Name</label>
         <input
@@ -52,11 +63,11 @@ export default function ContractorForm({ defaultContractor }: { defaultContracto
           name="email"
           className="w-full border-[1px] border-gray-200 p-2 rounded-sm dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           value={contractor?.email}
-          onChange={(e) => setContractor({ ...contractor, telephone: e.target.value })}
+          onChange={(e) => setContractor({ ...contractor, email: e.target.value })}
         />
       </div>
       <SelectMultiple
-        options={["Service 1", "Service 2"].map((s) => ({ id: s, text: s }))}
+        options={servicesList.map((s) => ({ id: s, text: s }))}
         initialValue={[]}
         value={contractor.services.map((s) => ({ id: s, text: s }))}
         onChange={(v) => setContractor({ ...contractor, services: v })}

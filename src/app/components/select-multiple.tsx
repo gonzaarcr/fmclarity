@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export type Option = {
   text: string;
@@ -18,6 +18,10 @@ export default function SelectMultiple({
 }) {
   const [selection, setSelection] = useState(initialValue ?? []);
 
+  useEffect(() => {
+    setSelection(value);
+  }, [value]);
+
   return (
     <div>
       <label
@@ -30,8 +34,7 @@ export default function SelectMultiple({
         id="select"
         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         onChange={(e) =>
-          e.target.value !== "" &&
-          setSelection([...selection, { id: e.target.value, text: e.target.value }])
+          e.target.value !== "" && onChange([...selection.map((s) => s.id), e.target.value])
         }
         value={""}
       >
@@ -39,7 +42,9 @@ export default function SelectMultiple({
         {options
           .filter((value) => !selection.map((s) => s.id).includes(value.id))
           .map((o) => (
-            <option value={o.id}>{o.text}</option>
+            <option key={o.id} value={o.id}>
+              {o.text}
+            </option>
           ))}
       </select>
       <div>
@@ -47,7 +52,7 @@ export default function SelectMultiple({
           <span
             key={sel.id}
             className="h-7 py-1 px-4 m-1 text-xs font-semibold bg-blue-500 rounded-md text-white cursor-pointer"
-            onClick={() => setSelection(selection.filter((s) => s.id !== sel.id))}
+            onClick={() => onChange(selection.filter((s) => s.id !== sel.id).map((s) => s.id))}
           >
             {sel.text} {"✖"}
           </span>

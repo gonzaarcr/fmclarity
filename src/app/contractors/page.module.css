@@ -6,3 +6,16 @@
 .edit_text {
   color: #3a7ff1;
 }
+
+.add_button {
+  padding: 0.5rem 2rem;
+  border-radius: 0.125rem;
+  background-color: #60a5fa;
+}
+
+.add_button_container {
+  padding: 0.5rem;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}

@@ -10,11 +10,13 @@ export default function SelectMultiple({
   initialValue,
   value,
   onChange,
+  title,
 }: {
   options: Option[];
   initialValue: Option[];
   value: Option[];
   onChange: (val: string[]) => void;
+  title: string;
 }) {
   const [selection, setSelection] = useState(initialValue ?? []);
 
@@ -28,7 +30,7 @@ export default function SelectMultiple({
         htmlFor="select"
         className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
       >
-        Select an option
+        {title}
       </label>
       <select
         id="select"

@@ -7,7 +7,7 @@ import { useContractorsStore } from "../store/contractors-store";
 
 const columns: ColumnType<Contractor>[] = [
   {
-    field: "_id",
+    field: "id",
     valueGetter: (c: Contractor) => c["_id"],
   },
   {

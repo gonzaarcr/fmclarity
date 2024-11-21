@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { Contractor } from "../types/contractor";
 import { API_URL } from "../types/constrants";
-import { randomIntFromInterval } from "../libs/utils";
 
 async function getContractors() {
   const res = await fetch(`${API_URL}/contractors`);
@@ -12,17 +11,12 @@ async function getContractors() {
 }
 
 async function postContractor(formData: Omit<Contractor, "_id">) {
-  const id = String(randomIntFromInterval(0, 100)).padStart(3, "0");
-  const contractor: Contractor = {
-    ...formData,
-    _id: id,
-  };
   const add = await fetch(`${API_URL}/contractors`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(contractor),
+    body: JSON.stringify(formData),
   });
 
   const content = (await add.json()) as Contractor;
@@ -35,10 +29,10 @@ async function putContractor(contractor: Contractor) {
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(contractor),
+    body: JSON.stringify({ ...contractor, _id: undefined }),
   });
 
-  const content = await add.json();
+  await add.json();
 }
 
 export function useContractorsStore() {
@@ -81,12 +75,17 @@ export function useContractorsStore() {
     setLoading(true);
     try {
       const res = await fetch(`${API_URL}/contractors/${id}`);
-      const json = await res.json();
-      return json as Contractor;
+      setLoading(false);
+      if (res.status === 200) {
+        const json = await res.json();
+        return json as Contractor;
+      } else {
+        return null;
+      }
     } catch (e) {
-    } finally {
       setLoading(false);
     }
+    return null;
   }
 
   return {

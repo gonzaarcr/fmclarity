@@ -2,31 +2,50 @@
 import { FormEvent, useState } from "react";
 import SelectMultiple from "../components/select-multiple";
 import { Contractor } from "../types/contractor";
+import styles from "./contractor.module.css";
 
-const emptyContractor: Contractor = {
+const emptyContractor = {
   name: "",
   telephone: "",
   email: "",
   services: [],
-  _id: "",
 };
+
+const telephoneRegex = /^\+?\d{10}$/;
+const emailRegex = /^[a-zA-Z0-9_]*@[a-zA-Z].com$/;
 
 export default function ContractorForm({
   title,
   defaultContractor,
   onSubmit,
   servicesList,
+  isLoading,
 }: {
   title: string;
   defaultContractor?: Contractor;
   onSubmit: (fields: Omit<Contractor, "_id">) => Promise<void>;
   servicesList: string[];
+  isLoading: boolean;
 }) {
-  const [contractor, setContractor] = useState(defaultContractor ?? emptyContractor);
+  const [contractor, setContractor] = useState<Omit<Contractor, "_id">>(
+    defaultContractor ?? emptyContractor,
+  );
+
+  const [formDirty, setFormDirty] = useState(false);
+
+  const errors = {
+    name: contractor.name.length <= 0,
+    telephone: !telephoneRegex.test(contractor.telephone),
+    email: !emailRegex.test(contractor.email),
+  };
 
   const submit = async (e: FormEvent) => {
     e.preventDefault();
-    await onSubmit(contractor);
+    if (Object.values(errors).some((v) => v)) {
+      setFormDirty(true);
+    } else {
+      await onSubmit(contractor);
+    }
   };
 
   return (
@@ -41,6 +60,9 @@ export default function ContractorForm({
           value={contractor?.name}
           onChange={(e) => setContractor({ ...contractor, name: e.target.value })}
         />
+        {errors.name && formDirty && (
+          <p className="mt-2 text-sm text-red-600 dark:text-red-500">Invalid or empty name</p>
+        )}
       </div>
       <div className="w-full py-2">
         <label htmlFor="telephone" className="text-sm font-bold py-2 block">
@@ -53,6 +75,9 @@ export default function ContractorForm({
           value={contractor?.telephone}
           onChange={(e) => setContractor({ ...contractor, telephone: e.target.value })}
         />
+        {errors.telephone && formDirty && (
+          <p className="mt-2 text-sm text-red-600 dark:text-red-500">Invalid or empty telephone</p>
+        )}
       </div>
       <div className="w-full py-2">
         <label htmlFor="email" className="text-sm font-bold py-2 block">
@@ -65,16 +90,21 @@ export default function ContractorForm({
           value={contractor?.email}
           onChange={(e) => setContractor({ ...contractor, email: e.target.value })}
         />
+        {errors.email && formDirty && (
+          <p className="mt-2 text-sm text-red-600 dark:text-red-500">Invalid or empty email</p>
+        )}
       </div>
       <SelectMultiple
         options={servicesList.map((s) => ({ id: s, text: s }))}
         initialValue={[]}
+        title="Select the services"
         value={contractor.services.map((s) => ({ id: s, text: s }))}
         onChange={(v) => setContractor({ ...contractor, services: v })}
       />
       <div className="w-full py-2">
         <button className="w-20 p-2 text-white border-gray-200 border-[1px] rounded-sm bg-green-400">
-          Submit
+          {isLoading && <span className={styles.loader} />}
+          {!isLoading && <p>Submit</p>}
         </button>
       </div>
     </form>

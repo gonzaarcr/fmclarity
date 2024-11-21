@@ -1,4 +1,5 @@
 "use client";
+import { useState } from "react";
 import ContractorForm from "@/app/forms/contractor";
 import { useContractorsStore } from "@/app/store/contractors-store";
 import { useServicesStore } from "@/app/store/services-store";
@@ -9,15 +10,23 @@ export default function AddContractor() {
   const router = useRouter();
   const { services } = useServicesStore();
   const { createContractor } = useContractorsStore();
+  const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = async (formData: Omit<Contractor, "_id">) => {
+    setIsLoading(true);
     await createContractor(formData);
-    router.back();
+    setIsLoading(false);
+    router.replace("/contractors");
   };
 
   return (
     <div>
-      <ContractorForm title="Add Contractor" onSubmit={onSubmit} servicesList={services} />
+      <ContractorForm
+        title="Add Contractor"
+        onSubmit={onSubmit}
+        servicesList={services}
+        isLoading={isLoading}
+      />
     </div>
   );
 }

@@ -1,0 +1,163 @@
+openapi: 3.0.3
+info:
+  title: CRUD challenge
+  description: |-
+    CRUD challenge for interview
+  version: 1.0.11
+servers:
+  - url: https://www.crudcrud.com/api/217e4984a32a47ab9dda2e638b3e144f
+tags:
+  - name: contractors
+    description: Contractors
+  - name: services
+    description: Contractor's services
+paths:
+  /contractors:
+    post:
+      tags:
+        - contractor
+      summary: Create contractor
+      description: Create contractor
+      operationId: createContractor
+      requestBody:
+        description: Created contractor object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Contractor'
+      responses:
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contractor'
+    get:
+      tags:
+        - contractor
+      summary: Get all contractors
+      description: Get all contractors
+      operationId: getContractors
+      requestBody:
+        description: Created user object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Contractor'
+      responses:
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Contractor'
+  /contractors/{id}:
+    get:
+      tags:
+        - contractor
+      summary: Get contractor by id
+      description: Get contractor by id
+      operationId: getContractor
+      parameters:
+        - name: id
+          in: path
+          description: ID of contractor to get
+          required: true
+          schema:
+            type: string
+      responses:
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Contractor'
+      
+    put:
+      tags:
+        - contractor
+      summary: Get all contractors
+      description: Get all contractors
+      operationId: getContractors
+      requestBody:
+        description: Created user object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Contractor'
+      responses:
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Contractor'
+  /services:
+    get:
+      tags:
+        - services
+      summary: Get list of services for a contractor
+      description: Get list of services for a contractor
+      operationId: getServices
+      responses:
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Service'
+
+components:
+  schemas:
+    Contractor:
+      required:
+        - name
+        - email
+        - telephone
+        - services
+      type: object
+      properties:
+        _id:
+          type: string
+          example: 673ee92bd0267903e85b3ffb
+        name:
+          type: string
+        telephone:
+          type: string
+          format: phone
+          example: +6155555555
+        email:
+          type: string
+          format: email
+          example: name@domain.com
+        services:
+          type: array
+          items:
+            $ref: '#/components/schemas/Service'
+    Service:
+      type: string
+    ApiResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        type:
+          type: string
+        message:
+          type: string
+  requestBodies:
+    Contractor:
+      description: Contrctor object to be created
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Contractor'

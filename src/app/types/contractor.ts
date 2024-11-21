@@ -1,5 +1,5 @@
 export type Contractor = {
-  ubn: string;
+  _id: string;
   name: string;
   email: string;
   telephone: string;

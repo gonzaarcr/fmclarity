@@ -10,7 +10,7 @@ export default function AddContractor() {
   const { services } = useServicesStore();
   const { createContractor } = useContractorsStore();
 
-  const onSubmit = async (formData: Omit<Contractor, "ubn">) => {
+  const onSubmit = async (formData: Omit<Contractor, "_id">) => {
     await createContractor(formData);
     router.back();
   };

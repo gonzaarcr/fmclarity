@@ -1,7 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
 import Table, { ColumnType } from "../components/table";
-import { API_URL } from "../types/constrants";
 import { Contractor } from "../types/contractor";
 import styles from "./page.module.css";
 import Link from "next/link";
@@ -9,8 +7,8 @@ import { useContractorsStore } from "../store/contractors-store";
 
 const columns: ColumnType<Contractor>[] = [
   {
-    field: "ubn",
-    valueGetter: (c: Contractor) => c["ubn"],
+    field: "_id",
+    valueGetter: (c: Contractor) => c["_id"],
   },
   {
     field: "name",
@@ -45,10 +43,10 @@ export default function Contractors() {
       </div>
       <Table
         elements={contractors}
-        getKey={(c: Contractor) => c.ubn}
+        getKey={(c: Contractor) => c._id}
         columns={columns}
         action={(e) => (
-          <Link href={`/contractors/${e.ubn}`} className={styles.edit_text}>
+          <Link href={`/contractors/${e._id}`} className={styles.edit_text}>
             Edit
           </Link>
         )}

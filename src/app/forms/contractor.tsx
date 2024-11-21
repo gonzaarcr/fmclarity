@@ -8,7 +8,7 @@ const emptyContractor: Contractor = {
   telephone: "",
   email: "",
   services: [],
-  ubn: "",
+  _id: "",
 };
 
 export default function ContractorForm({
@@ -19,7 +19,7 @@ export default function ContractorForm({
 }: {
   title: string;
   defaultContractor?: Contractor;
-  onSubmit: (fields: Omit<Contractor, "ubn">) => Promise<void>;
+  onSubmit: (fields: Omit<Contractor, "_id">) => Promise<void>;
   servicesList: string[];
 }) {
   const [contractor, setContractor] = useState(defaultContractor ?? emptyContractor);

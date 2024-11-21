@@ -11,11 +11,11 @@ async function getContractors() {
   return json as Contractor[];
 }
 
-async function postContractor(formData: Omit<Contractor, "ubn">) {
+async function postContractor(formData: Omit<Contractor, "_id">) {
   const id = String(randomIntFromInterval(0, 100)).padStart(3, "0");
   const contractor: Contractor = {
     ...formData,
-    ubn: id,
+    _id: id,
   };
   const add = await fetch(`${API_URL}/contractors`, {
     method: "POST",
@@ -30,7 +30,7 @@ async function postContractor(formData: Omit<Contractor, "ubn">) {
 }
 
 async function putContractor(contractor: Contractor) {
-  const add = await fetch(`${API_URL}/contractors/${contractor.ubn}`, {
+  const add = await fetch(`${API_URL}/contractors/${contractor._id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -57,7 +57,7 @@ export function useContractorsStore() {
     });
   }
 
-  async function createContractor(formData: Omit<Contractor, "ubn">) {
+  async function createContractor(formData: Omit<Contractor, "_id">) {
     setLoading(true);
     try {
       const newContractor = await postContractor(formData);

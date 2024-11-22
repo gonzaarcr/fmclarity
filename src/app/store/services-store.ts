@@ -9,9 +9,12 @@ async function getServices() {
       "Content-Type": "application/json",
     },
   });
-
   const content = await add.json();
-  return content.services as string[];
+  try {
+    return content.map((c: { service: string; _id: string }) => c.service) as string[];
+  } catch (e) {
+    return [];
+  }
 }
 
 export function useServicesStore() {

@@ -14,22 +14,29 @@
   padding: 1rem 1.5rem;
 }
 
+.row {
+  background-color: white;
+  border-bottom-width: 1px;
+}
+
 .edit_cell {
   text-align: right;
 }
 
 .header {
   text-transform: uppercase;
-}
-
-@media (prefers-color-schema: light) {
-  .header {
-    background-color: #f7f7f7;
-  }
+  background-color: #f7f7f7;
+  border-bottom-width: 1px;
 }
 
 @media (prefers-color-schema: dark) {
   .header {
     background-color: #374151;
+    border-color: #ccc;
+  }
+
+  .row {
+    background-color: rgb(55 65 81);
+    border-color: #ccc;
   }
 }

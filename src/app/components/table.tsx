@@ -64,7 +64,7 @@ export default function Table<T>({
         </thead>
         <tbody>
           {sortedElements.map((e) => (
-            <tr key={getKey(e)} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+            <tr key={getKey(e)} className={styles.row}>
               {columns.map((col) => (
                 <td key={col.field} className={styles.cell}>
                   {col.valueGetter(e)}

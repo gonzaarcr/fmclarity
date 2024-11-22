@@ -26,12 +26,14 @@ paths:
             schema:
               $ref: '#/components/schemas/ContractorForm'
       responses:
-        default:
+        '200':
           description: successful operation
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Contractor'
+        '400':
+          description: Endpoint has exceeded allowed number of requests
     get:
       tags:
         - contractor
@@ -39,7 +41,7 @@ paths:
       description: Get all contractors
       operationId: getContractors
       responses:
-        default:
+        '200':
           description: successful operation
           content:
             application/json:
@@ -47,6 +49,8 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Contractor'
+        '400':
+          description: Endpoint has exceeded allowed number of requests
   /contractors/{id}:
     get:
       tags:
@@ -62,7 +66,7 @@ paths:
           schema:
             type: string
       responses:
-        default:
+        '200':
           description: successful operation
           content:
             application/json:
@@ -70,12 +74,15 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Contractor'
-      
+        '400':
+          description: Endpoint has exceeded allowed number of requests
+        '404':
+          description: Invalid id
     put:
       tags:
         - contractor
-      summary: Get all contractors
-      description: Get all contractors
+      summary: Edit contractors
+      description: Edit contractors
       operationId: putContractors
       parameters:
         - name: id
@@ -85,13 +92,13 @@ paths:
           schema:
             type: string
       requestBody:
-        description: Created user object
+        description: Field to modify
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/ContractorForm'
       responses:
-        default:
+        '200':
           description: successful operation
           content:
             application/json:
@@ -99,6 +106,10 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Contractor'
+        '400':
+          description: Endpoint has exceeded allowed number of requests
+        '404':
+          description: Invalid id
   /services:
     get:
       tags:
@@ -107,7 +118,7 @@ paths:
       description: Get list of services for a contractor
       operationId: getServices
       responses:
-        default:
+        '200':
           description: successful operation
           content:
             application/json:
@@ -115,6 +126,8 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Service'
+        '400':
+          description: Endpoint has exceeded allowed number of requests
 
 components:
   schemas:

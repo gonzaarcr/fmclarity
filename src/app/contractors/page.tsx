@@ -66,9 +66,14 @@ export default function Contractors() {
         getKey={(c: Contractor) => c._id}
         columns={columns}
         action={(e) => (
-          <Link href={`/contractors/${e._id}`} className={styles.edit_text}>
-            Edit
-          </Link>
+          <>
+            <Link href={`/contractors/${e._id}`} className={styles.action_text}>
+              View
+            </Link>
+            <Link href={`/contractors/${e._id}/edit`} className={styles.action_text}>
+              Edit
+            </Link>
+          </>
         )}
       />
       <div className={styles.notification_container}>

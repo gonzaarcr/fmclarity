@@ -20,3 +20,58 @@
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
 }
+
+.title {
+  display: block;
+  font-weight: 700;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+
+.input_text {
+  width: 100%;
+  border-width: 1px;
+  border-color: #ddd;
+  padding: 0.5rem;
+  border-radius: 0.125rem;
+}
+
+.label {
+  display: block;
+  font-weight: 700;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.submit_button {
+  background-color: #5d8;
+  color: white;
+  padding: 0.5rem;
+  border-width: 1px;
+  border-radius: 0.125rem;
+  border-color: #ccc;
+  margin-top: 1rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  .input_text {
+    color: white;
+    border-color: #333;
+    background-color: #374151;
+  }
+
+  .label {
+    color: white;
+  }
+
+  .title {
+    color: white;
+  }
+}
+
+.error_text {
+  margin-top: 0.5rem;
+  color: red;
+}

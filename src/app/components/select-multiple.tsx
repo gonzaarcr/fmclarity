@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import styles from "./select-multiple.module.css";
 
 export type Option = {
   text: string;
@@ -26,15 +27,12 @@ export default function SelectMultiple({
 
   return (
     <div>
-      <label
-        htmlFor="select"
-        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-      >
+      <label htmlFor="select" className={styles.label}>
         {title}
       </label>
       <select
         id="select"
-        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        className={styles.input_text}
         onChange={(e) =>
           e.target.value !== "" && onChange([...selection.map((s) => s.id), e.target.value])
         }
@@ -49,11 +47,11 @@ export default function SelectMultiple({
             </option>
           ))}
       </select>
-      <div>
+      <div className={styles.pill_container}>
         {selection.map((sel) => (
           <span
             key={sel.id}
-            className="h-7 py-1 px-4 m-1 text-xs font-semibold bg-blue-500 rounded-md text-white cursor-pointer"
+            className={styles.pill}
             onClick={() => onChange(selection.filter((s) => s.id !== sel.id).map((s) => s.id))}
           >
             {sel.text} {"✖"}

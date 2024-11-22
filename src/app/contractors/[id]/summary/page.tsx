@@ -1,13 +1,11 @@
 "use client";
 import { useEffect, useState } from "react";
-import { usePathname } from "next/navigation";
 import { useContractorsStore } from "@/app/store/contractors-store";
 import { Contractor } from "@/app/types/contractor";
 import Link from "next/link";
 
-export default function ContractorDetails({ params }: { params: Promise<{ id: string }> }) {
+export default function ContractorSummary({ params }: { params: Promise<{ id: string }> }) {
   const { getContractor } = useContractorsStore();
-  const pathname = usePathname();
   const [contractor, setContractor] = useState<Contractor>();
   const [isLoadingContractor, setIsLoadingContractor] = useState(true);
 
@@ -27,18 +25,10 @@ export default function ContractorDetails({ params }: { params: Promise<{ id: st
 
   return (
     <div>
-      <span className="font-bold py-2 block text-2xl">Contractor details</span>
+      <span className="font-bold py-2 block text-2xl">Contractor summary</span>
       <div className="w-full py-2">
         <p className="text-sm font-bold py-2 block">Name</p>
         <p className="w-full p-2 dark:text-whit ">{contractor.name}</p>
-      </div>
-      <div className="w-full py-2">
-        <p className="text-sm font-bold py-2 block">Telephone</p>
-        <p className="w-full p-2 dark:text-whit ">{contractor.telephone}</p>
-      </div>
-      <div className="w-full py-2">
-        <p className="text-sm font-bold py-2 block">e-mail</p>
-        <p className="w-full p-2 dark:text-whit ">{contractor.email}</p>
       </div>
       <div className="w-full py-2">
         <p className="text-sm font-bold py-2 block">Services</p>
@@ -46,16 +36,10 @@ export default function ContractorDetails({ params }: { params: Promise<{ id: st
       </div>
       <div className="w-full py-2">
         <Link
-          href={`${pathname}/summary`}
+          href={`/contractors/${contractor._id}`}
           className="p-2 text-white border-gray-200 border-[1px] rounded-sm bg-green-400"
         >
-          View summary page
-        </Link>
-        <Link
-          href={`${pathname}/edit`}
-          className="m-2 p-2 text-white border-gray-200 border-[1px] rounded-sm bg-green-400"
-        >
-          Edit
+          View all details
         </Link>
       </div>
     </div>

@@ -3,8 +3,10 @@
   margin: auto;
 }
 
-.edit_text {
+.action_text {
   color: #3a7ff1;
+  margin-right: 0.5rem;
+  margin-left: 0.5rem;
 }
 
 .add_button {

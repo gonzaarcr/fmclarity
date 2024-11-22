@@ -11,8 +11,8 @@ const emptyContractor = {
   services: [],
 };
 
-const telephoneRegex = /^\+?\d{10}$/;
-const emailRegex = /^[a-zA-Z0-9_]*@[a-zA-Z].com$/;
+const telephoneRegex = /^\+?\d{9,11}$/;
+const emailRegex = /^[a-zA-Z0-9_]+@[a-zA-Z]+.com$/;
 
 export default function ContractorForm({
   title,
@@ -37,6 +37,7 @@ export default function ContractorForm({
     name: contractor.name.length <= 0,
     telephone: !telephoneRegex.test(contractor.telephone),
     email: !emailRegex.test(contractor.email),
+    services: contractor.services.length <= 0,
   };
 
   const submit = async (e: FormEvent) => {
@@ -50,49 +51,47 @@ export default function ContractorForm({
 
   return (
     <form onSubmit={submit}>
-      <span className="font-bold py-2 block text-2xl">{title}</span>
+      <span className={styles.title}>{title}</span>
       <div className={styles.input_container}>
-        <label className="text-sm font-bold py-2 block">Name</label>
+        <label className={styles.label}>Name</label>
         <input
           type="text"
           name="name"
-          className="w-full border-[1px] border-gray-200 p-2 rounded-sm dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          placeholder="Name"
+          className={styles.input_text}
           value={contractor?.name}
           onChange={(e) => setContractor({ ...contractor, name: e.target.value })}
         />
-        {errors.name && formDirty && (
-          <p className="mt-2 text-sm text-red-600 dark:text-red-500">Invalid or empty name</p>
-        )}
+        {errors.name && formDirty && <p className={styles.error_text}>Invalid or empty name</p>}
       </div>
       <div className={styles.input_container}>
-        <label htmlFor="telephone" className="text-sm font-bold py-2 block">
+        <label htmlFor="telephone" className={styles.label}>
           Telephone
         </label>
         <input
           type="tel"
           name="telephone"
-          className="w-full border-[1px] border-gray-200 p-2 rounded-sm dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          placeholder="+6155555555"
+          className={styles.input_text}
           value={contractor?.telephone}
           onChange={(e) => setContractor({ ...contractor, telephone: e.target.value })}
         />
         {errors.telephone && formDirty && (
-          <p className="mt-2 text-sm text-red-600 dark:text-red-500">Invalid or empty telephone</p>
+          <p className={styles.error_text}>Invalid or empty telephone</p>
         )}
       </div>
       <div className={styles.input_container}>
-        <label htmlFor="email" className="text-sm font-bold py-2 block">
-          email
+        <label htmlFor="email" className={styles.label}>
+          e-mail
         </label>
         <input
-          type="email"
           name="email"
-          className="w-full border-[1px] border-gray-200 p-2 rounded-sm dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          placeholder="name@domain.com"
+          className={styles.input_text}
           value={contractor?.email}
           onChange={(e) => setContractor({ ...contractor, email: e.target.value })}
         />
-        {errors.email && formDirty && (
-          <p className="mt-2 text-sm text-red-600 dark:text-red-500">Invalid or empty email</p>
-        )}
+        {errors.email && formDirty && <p className={styles.error_text}>Invalid or empty email</p>}
       </div>
       <SelectMultiple
         options={servicesList.map((s) => ({ id: s, text: s }))}
@@ -101,12 +100,13 @@ export default function ContractorForm({
         value={contractor.services.map((s) => ({ id: s, text: s }))}
         onChange={(v) => setContractor({ ...contractor, services: v })}
       />
-      <div className="w-full py-2">
-        <button className="w-20 p-2 text-white border-gray-200 border-[1px] rounded-sm bg-green-400">
-          {isLoading && <span className={styles.loader} />}
-          {!isLoading && <p>Submit</p>}
-        </button>
-      </div>
+      {errors.services && formDirty && (
+        <p className={styles.error_text}>Select at least 1 service</p>
+      )}
+      <button className={styles.submit_button}>
+        {isLoading && <span className={styles.loader} />}
+        {!isLoading && <p>Submit</p>}
+      </button>
     </form>
   );
 }

@@ -1,0 +1,36 @@
+.field_container {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.title {
+  display: block;
+  font-weight: 700;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+
+.label {
+  display: block;
+  font-weight: 700;
+  font-size: 0.875rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.text {
+  width: 100%;
+  padding: 0.5rem;
+}
+
+.submit_button {
+  background-color: #5d8;
+  color: white;
+  padding: 0.5rem;
+  border-width: 1px;
+  border-radius: 0.125rem;
+  border-color: #ccc;
+  margin-top: 1rem;
+}

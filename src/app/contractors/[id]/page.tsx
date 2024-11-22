@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import { useContractorsStore } from "@/app/store/contractors-store";
 import { Contractor } from "@/app/types/contractor";
 import Link from "next/link";
+import styles from "./page.module.css";
 
 export default function ContractorDetails({ params }: { params: Promise<{ id: string }> }) {
   const { getContractor } = useContractorsStore();
@@ -27,34 +28,28 @@ export default function ContractorDetails({ params }: { params: Promise<{ id: st
 
   return (
     <div>
-      <span className="font-bold py-2 block text-2xl">Contractor details</span>
-      <div className="w-full py-2">
-        <p className="text-sm font-bold py-2 block">Name</p>
-        <p className="w-full p-2 dark:text-whit ">{contractor.name}</p>
+      <span className={styles.title}>Contractor details</span>
+      <div className={styles.field_container}>
+        <p className={styles.label}>Name</p>
+        <p className={styles.text}>{contractor.name}</p>
       </div>
-      <div className="w-full py-2">
-        <p className="text-sm font-bold py-2 block">Telephone</p>
-        <p className="w-full p-2 dark:text-whit ">{contractor.telephone}</p>
+      <div className={styles.field_container}>
+        <p className={styles.label}>Telephone</p>
+        <p className={styles.text}>{contractor.telephone}</p>
       </div>
-      <div className="w-full py-2">
-        <p className="text-sm font-bold py-2 block">e-mail</p>
-        <p className="w-full p-2 dark:text-whit ">{contractor.email}</p>
+      <div className={styles.field_container}>
+        <p className={styles.label}>e-mail</p>
+        <p className={styles.text}>{contractor.email}</p>
       </div>
-      <div className="w-full py-2">
-        <p className="text-sm font-bold py-2 block">Services</p>
-        <p className="w-full p-2 dark:text-whit ">{contractor.services.join(", ")}</p>
+      <div className={styles.field_container}>
+        <p className={styles.label}>Services</p>
+        <p className={styles.text}>{contractor.services.join(", ")}</p>
       </div>
-      <div className="w-full py-2">
-        <Link
-          href={`${pathname}/summary`}
-          className="p-2 text-white border-gray-200 border-[1px] rounded-sm bg-green-400"
-        >
+      <div className={styles.field_container}>
+        <Link href={`${pathname}/summary`} className={styles.submit_button}>
           View summary page
         </Link>
-        <Link
-          href={`${pathname}/edit`}
-          className="m-2 p-2 text-white border-gray-200 border-[1px] rounded-sm bg-green-400"
-        >
+        <Link href={`${pathname}/edit`} className={styles.submit_button}>
           Edit
         </Link>
       </div>

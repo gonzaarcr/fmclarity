@@ -11,7 +11,7 @@ async function getServices() {
   });
 
   const content = await add.json();
-  return content as string[];
+  return content.services as string[];
 }
 
 export function useServicesStore() {

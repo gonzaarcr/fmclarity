@@ -24,7 +24,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Contractor'
+              $ref: '#/components/schemas/ContractorForm'
       responses:
         default:
           description: successful operation
@@ -38,12 +38,6 @@ paths:
       summary: Get all contractors
       description: Get all contractors
       operationId: getContractors
-      requestBody:
-        description: Created user object
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Contractor'
       responses:
         default:
           description: successful operation
@@ -82,13 +76,20 @@ paths:
         - contractor
       summary: Get all contractors
       description: Get all contractors
-      operationId: getContractors
+      operationId: putContractors
+      parameters:
+        - name: id
+          in: path
+          description: ID of contractor to edit
+          required: true
+          schema:
+            type: string
       requestBody:
         description: Created user object
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Contractor'
+              $ref: '#/components/schemas/ContractorForm'
       responses:
         default:
           description: successful operation
@@ -119,6 +120,7 @@ components:
   schemas:
     Contractor:
       required:
+        - _id
         - name
         - email
         - telephone
@@ -142,8 +144,31 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Service'
+    ContractorForm:
+      required:
+        - name
+        - email
+        - telephone
+        - services
+      type: object
+      properties:
+        name:
+          type: string
+        telephone:
+          type: string
+          format: phone
+          example: +6155555555
+        email:
+          type: string
+          format: email
+          example: name@domain.com
+        services:
+          type: array
+          items:
+            $ref: '#/components/schemas/Service'
     Service:
       type: string
+      example: "Service 1"
     ApiResponse:
       type: object
       properties:

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { Contractor } from "../types/contractor";
 import { API_URL } from "../types/constrants";
+import { Keys, useLocalStorage } from "../hooks/use-local-storage";
 
 async function getContractors() {
   const res = await fetch(`${API_URL}/contractors`);
@@ -39,6 +40,8 @@ export function useContractorsStore() {
   const [contractors, setContractors] = useState<Contractor[]>([]);
   const [isLoading, setLoading] = useState(true);
 
+  const [notificationEvents, setNotificationEvents] = useLocalStorage(Keys.NOTIFICATION_EVENTS, []);
+
   useEffect(() => {
     loadContractors();
   }, []);
@@ -56,6 +59,7 @@ export function useContractorsStore() {
     try {
       const newContractor = await postContractor(formData);
       setContractors([...contractors, newContractor]);
+      return newContractor;
     } catch (e) {
       setLoading(false);
     }
@@ -93,6 +97,8 @@ export function useContractorsStore() {
     createContractor,
     editContractor,
     getContractor,
+    notificationEvents,
+    setNotificationEvents,
     isLoading,
   };
 }

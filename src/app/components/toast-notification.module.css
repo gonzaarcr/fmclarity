@@ -1,0 +1,23 @@
+.container {
+  display: flex;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  background-color: #ffffa2;
+}
+
+.text {
+  padding-right: 0.5rem;
+  padding-left: 0.5rem;
+}
+
+.close_button {
+  background-color: #ffffa2;
+}
+
+.button_container {
+  display: flex;
+  align-items: center;
+  margin-right: 0.5rem;
+  margin-left: 0.5rem;
+}

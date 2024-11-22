@@ -9,14 +9,20 @@ import { useRouter } from "next/navigation";
 export default function AddContractor() {
   const router = useRouter();
   const { services } = useServicesStore();
-  const { createContractor } = useContractorsStore();
+  const { createContractor, setNotificationEvents } = useContractorsStore();
   const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = async (formData: Omit<Contractor, "_id">) => {
     setIsLoading(true);
-    await createContractor(formData);
+    const newContractor = await createContractor(formData);
     setIsLoading(false);
-    router.replace("/contractors");
+    if (newContractor) {
+      setNotificationEvents((p) => [
+        ...p,
+        { type: "CONTRACTOR_ADDED_SUCCESS", id: newContractor._id, payload: newContractor },
+      ]);
+      router.replace("/contractors");
+    }
   };
 
   return (

@@ -49,9 +49,9 @@ export default function ContractorForm({
   };
 
   return (
-    <form className="w-full" onSubmit={submit}>
+    <form onSubmit={submit}>
       <span className="font-bold py-2 block text-2xl">{title}</span>
-      <div className="w-full py-2">
+      <div className={styles.input_container}>
         <label className="text-sm font-bold py-2 block">Name</label>
         <input
           type="text"
@@ -64,7 +64,7 @@ export default function ContractorForm({
           <p className="mt-2 text-sm text-red-600 dark:text-red-500">Invalid or empty name</p>
         )}
       </div>
-      <div className="w-full py-2">
+      <div className={styles.input_container}>
         <label htmlFor="telephone" className="text-sm font-bold py-2 block">
           Telephone
         </label>
@@ -79,7 +79,7 @@ export default function ContractorForm({
           <p className="mt-2 text-sm text-red-600 dark:text-red-500">Invalid or empty telephone</p>
         )}
       </div>
-      <div className="w-full py-2">
+      <div className={styles.input_container}>
         <label htmlFor="email" className="text-sm font-bold py-2 block">
           email
         </label>

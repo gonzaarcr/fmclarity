@@ -14,3 +14,9 @@
     transform: rotate(1turn);
   }
 }
+
+.input-container {
+  width: 100%;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}

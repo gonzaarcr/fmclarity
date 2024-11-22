@@ -15,6 +15,16 @@
   background-color: #ffffa2;
 }
 
+@media (prefers-color-scheme: dark) {
+  .close_button {
+    color: black;
+  }
+
+  .text {
+    color: black;
+  }
+}
+
 .button_container {
   display: flex;
   align-items: center;

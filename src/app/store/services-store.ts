@@ -1,9 +1,11 @@
 "use client";
 import { useEffect, useState } from "react";
-import { API_URL } from "../types/constrants";
+import { useSettinsStore } from "./settings-store";
+import { Settings } from "../types/settings";
+import { fetch_middleware } from "../libs/fetch";
 
-async function getServices() {
-  const add = await fetch(`${API_URL}/services`, {
+async function getServices(settings: Settings) {
+  const add = await fetch_middleware(settings, `/services`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -19,10 +21,11 @@ async function getServices() {
 
 export function useServicesStore() {
   const [services, setServices] = useState<string[]>([]);
+  const settings = useSettinsStore();
 
   useEffect(() => {
-    getServices().then((res) => {
-      setServices(res);
+    getServices(settings.settings).then((res) => {
+      setServices(["Default service", ...res]);
     });
   }, []);
 

@@ -1,12 +1,15 @@
-import { Dispatch, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { NotificationEvent } from "../types/notification-event";
+import { Settings } from "../types/settings";
 
 enum Keys {
   NOTIFICATION_EVENTS = "notification_events",
+  SETTINGS = "settings",
 }
 
-type HookReturn<T> = [T, Dispatch<(v: T) => void>];
+type HookReturn<T> = [T, Dispatch<SetStateAction<T>>];
 
+function useLocalStorage(k: Keys.SETTINGS, initialValue?: Settings): HookReturn<Settings>;
 function useLocalStorage(
   k: Keys.NOTIFICATION_EVENTS,
   initialValue: NotificationEvent[],

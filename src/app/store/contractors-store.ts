@@ -2,17 +2,32 @@
 
 import { useEffect, useState } from "react";
 import { Contractor } from "../types/contractor";
-import { API_URL } from "../types/constrants";
 import { Keys, useLocalStorage } from "../hooks/use-local-storage";
+import { useSettinsStore } from "./settings-store";
+import { fetch_middleware } from "../libs/fetch";
+import { Settings } from "../types/settings";
 
-async function getContractors() {
-  const res = await fetch(`${API_URL}/contractors`);
+async function getContractor_(settings: Settings, id: string) {
+  try {
+    const res = await fetch_middleware(settings, `/contractors/${id}`);
+    if (res.status === 200) {
+      const json = await res.json();
+      return json as Contractor;
+    } else {
+      return null;
+    }
+  } catch (e) {}
+  return null;
+}
+
+async function getContractors(settings: Settings) {
+  const res = await fetch_middleware(settings, `/contractors`);
   const json = await res.json();
   return json as Contractor[];
 }
 
-async function postContractor(formData: Omit<Contractor, "_id">) {
-  const add = await fetch(`${API_URL}/contractors`, {
+async function postContractor(settings: Settings, formData: Omit<Contractor, "_id">) {
+  const add = await fetch_middleware(settings, `/contractors`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -24,8 +39,8 @@ async function postContractor(formData: Omit<Contractor, "_id">) {
   return content;
 }
 
-async function putContractor(contractor: Contractor) {
-  const add = await fetch(`${API_URL}/contractors/${contractor._id}`, {
+async function putContractor(settings: Settings, contractor: Contractor) {
+  const add = await fetch_middleware(settings, `/contractors/${contractor._id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -41,6 +56,7 @@ export function useContractorsStore() {
   const [isLoading, setLoading] = useState(true);
 
   const [notificationEvents, setNotificationEvents] = useLocalStorage(Keys.NOTIFICATION_EVENTS, []);
+  const settings = useSettinsStore();
 
   useEffect(() => {
     loadContractors();
@@ -48,7 +64,7 @@ export function useContractorsStore() {
 
   async function loadContractors() {
     setLoading(true);
-    getContractors().then((res) => {
+    getContractors(settings.settings).then((res) => {
       setContractors(res);
       setLoading(false);
     });
@@ -57,7 +73,7 @@ export function useContractorsStore() {
   async function createContractor(formData: Omit<Contractor, "_id">) {
     setLoading(true);
     try {
-      const newContractor = await postContractor(formData);
+      const newContractor = await postContractor(settings.settings, formData);
       setContractors([...contractors, newContractor]);
       return newContractor;
     } catch (e) {
@@ -68,7 +84,7 @@ export function useContractorsStore() {
   async function editContractor(contractor: Contractor) {
     setLoading(true);
     try {
-      await putContractor(contractor);
+      await putContractor(settings.settings, contractor);
     } catch (e) {
       setLoading(false);
     }
@@ -76,20 +92,7 @@ export function useContractorsStore() {
   }
 
   async function getContractor(id: string) {
-    setLoading(true);
-    try {
-      const res = await fetch(`${API_URL}/contractors/${id}`);
-      setLoading(false);
-      if (res.status === 200) {
-        const json = await res.json();
-        return json as Contractor;
-      } else {
-        return null;
-      }
-    } catch (e) {
-      setLoading(false);
-    }
-    return null;
+    return await getContractor_(settings.settings, id);
   }
 
   return {

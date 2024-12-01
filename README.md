@@ -31,7 +31,10 @@ curl 'https://www.crudcrud.com/api/b0f6d15d7364406397b9dc3370edf1f9/services' -X
 
 ## Using
 
-By navigating to http://localhost:3000 a list of contractors will be presented. A new contractor can be added with the "Add" button on the top. A form will be presented, where name, telephone, email and services have to be filled. All fields are required. The telephone has to be a number between 9 and 11 digits and can start with a plus (+) sign. The email has to have an alphanumeric username, an "at" sign (@), a domain, and finish with ".com". At least one service has to be selected to create a contractor. After submitting, the user will be redirected to the contractors list with a message confirming the operation was successful.
+By navigating to http://localhost:3000/contractors a list of contractors will be presented. A new contractor can be added with the "Add" button on the top. A form will be presented, where name, telephone, email and services have to be filled. All fields are required. The telephone has to be a number between 9 and 11 digits and can start with a plus (+) sign. The email has to have an alphanumeric username, an "at" sign (@), a domain, and finish with ".com". At least one service has to be selected to create a contractor. After submitting, the user will be redirected to the contractors list with a message confirming the operation was successful.
 
 From the list, a contractor can be viewed by pressing the "View" button on the corresponding row. All fields can be viewed there, and we go to the edit page with the "Edit" button. There’s also a button to go to a summary page that lists only the name and the service the contractor provides, in case that information wishes to be shared.
 
+## Local version
+
+There‘s an option to use the local storage instead of an external API to make things simpler. You just have to go to http://localhost:3000 and click on the local option. And to load service you just have to run the command `localStorage.setItem('/services', JSON.stringify([{service:"Service 1"}, {service:"Service 2"}]))`, where "Service 1" and "Service 2" can be replaced with the desired services.
